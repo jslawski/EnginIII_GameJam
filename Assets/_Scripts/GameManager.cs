@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private CharacterStack charStack;
 
+    [SerializeField]
     private int score = 0;
 
     private void Start()
