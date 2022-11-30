@@ -22,11 +22,10 @@ public class Vowel : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     }
 
     public void OnPointerEnter(PointerEventData data)
-    {
-        //PC Only
-        if (Input.GetMouseButton(0))
-        {
-            CharacterManager.vowel = this.character.ToLower();
+    {        
+        if (CharacterManager.consonant != string.Empty)
+        {            
+            CharacterManager.vowel = this.character.ToLower();            
         }
-    }
+    }    
 }

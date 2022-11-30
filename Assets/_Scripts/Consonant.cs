@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class Consonant : MonoBehaviour, IPointerDownHandler
+public class Consonant : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {    
     private string character;
     private TextMeshProUGUI consonantText;
-    
+
+    private LineRenderer dragLine;
+
+    public bool dragging = false;
+
     public void Setup(string character)
     {
         this.character = character;
@@ -20,5 +24,10 @@ public class Consonant : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData data)
     {
         CharacterManager.consonant = this.character.ToLower();
+    }
+
+    public void OnPointerUp(PointerEventData data)
+    {
+        CharacterManager.consonant = string.Empty;
     }
 }

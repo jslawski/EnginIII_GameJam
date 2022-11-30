@@ -19,6 +19,7 @@ public class CharacterBlock : MonoBehaviour
         //Skip yi and ye
         while (randomCharacter == "yi" || randomCharacter == "ye")
         {
+            randomIndex = Random.Range(0, Level.levelCharacters_JP.Count);
             randomCharacter = Level.levelCharacters_JP[randomIndex];
         }
 
@@ -28,5 +29,10 @@ public class CharacterBlock : MonoBehaviour
         this.JPCharacter = randomCharacter;
 
         GetComponent<Transform>().SetAsFirstSibling();
+    }
+
+    public void SwapToEnglish()
+    {
+        this.blockText.text = ENCharacter.ToUpper();
     }
 }

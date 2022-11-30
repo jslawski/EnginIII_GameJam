@@ -11,6 +11,11 @@ public class CharacterStack : MonoBehaviour
     [SerializeField]
     private int maxBlocks = 10;
 
+    [SerializeField]
+    private AudioSource correctSound;
+    [SerializeField]
+    private AudioSource incorrectSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +36,8 @@ public class CharacterStack : MonoBehaviour
             this.AddBlock();
             yield return new WaitForSeconds(Level.timeBetweenBlocks);
         }
+
+        GameManager.gameOver = true;
     }
 
     private void AddBlock()
@@ -50,12 +57,13 @@ public class CharacterStack : MonoBehaviour
         if (entry == checkBlock.ENCharacter)
         {
             Destroy(checkBlock.gameObject);
-            //Play correct sound
+            this.correctSound.Play();
             return true;
         }
         else
         {
-            //Play incorrect sound
+            this.incorrectSound.Play();
+            checkBlock.SwapToEnglish();
             return false;
         }
     }

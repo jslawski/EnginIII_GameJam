@@ -11,21 +11,29 @@ public class GameManager : MonoBehaviour
     private Transform consonantsParent;
     [SerializeField]
     private GameObject consonantPrefab;
-
-    [SerializeField]
-    private int score = 0;
+    
+    public static int score = 0;
+    private int timeIncreaseThreshold = 5;
+    private float timeSpeedIncrease = 0.1f;
 
     private Dictionary<string, AudioClip> characterSounds;
-    private AudioSource vocalAudio;
+    private AudioSource gameAudio;
+
+    [SerializeField]
+    private GameObject gameOverCanvas;
+
+    public static bool gameOver = false;
 
     private void Start()
     {
         this.SetupGame();
-        this.vocalAudio = GetComponent<AudioSource>();
+        this.gameAudio = GetComponent<AudioSource>();
     }
 
     private void SetupGame()
     {
+        gameOver = false;
+        score = 0;
         this.SetupAudioDictionary();
         this.StartLevel();
     }
@@ -36,13 +44,7 @@ public class GameManager : MonoBehaviour
 
         foreach (KeyValuePair<string, string> entry in TranslationDictionary.ENtoJP)
         {
-            AudioClip foundClip = Resources.Load<AudioClip>("Audio/" + entry.Key);
-
-            if (foundClip == null)
-            {
-                Debug.LogError("NULL!");
-            }
-
+            AudioClip foundClip = Resources.Load<AudioClip>("Audio/VocalSounds/" + entry.Key);
             this.characterSounds.Add(entry.Key, foundClip);
         }
     }
@@ -52,6 +54,16 @@ public class GameManager : MonoBehaviour
         if (CharacterManager.vowel != string.Empty)
         {
             this.ProcessEntry();
+        }
+
+        if (gameOver == true)
+        {
+            this.gameOverCanvas.SetActive(true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 
@@ -83,19 +95,29 @@ public class GameManager : MonoBehaviour
     {
         string characterEntry = CharacterManager.consonant + CharacterManager.vowel;
 
-        Debug.LogError("Processing: " + characterEntry);
-
         bool result = this.charStack.ProcessEntry(characterEntry);
 
         if (result == true)
         {
-            this.score++;
-        }
+            score++;
 
-        this.vocalAudio.clip = this.characterSounds[characterEntry];
-        this.vocalAudio.Play();
+            if (score % this.timeIncreaseThreshold == 0)
+            {
+                Level.timeBetweenBlocks -= this.timeSpeedIncrease;
+            }
+        }
+       
+        StartCoroutine(this.PlayVocalAudio(characterEntry));
 
         CharacterManager.consonant = string.Empty;
         CharacterManager.vowel = string.Empty;        
+    }
+
+    private IEnumerator PlayVocalAudio(string characterEntry)
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        this.gameAudio.clip = this.characterSounds[characterEntry];
+        this.gameAudio.Play();
     }
 }
