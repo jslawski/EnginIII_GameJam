@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     
     public static int score = 0;
     private int timeIncreaseThreshold = 5;
-    private float timeSpeedIncrease = 0.1f;
+    private float timeSpeedIncrease = 0.2f;
 
     private Dictionary<string, AudioClip> characterSounds;
     private AudioSource gameAudio;
