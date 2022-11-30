@@ -5,8 +5,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 public class Consonant : MonoBehaviour, IPointerClickHandler
-{
-    [SerializeField]
+{    
     private string character;
     private TextMeshProUGUI consonantText;
 

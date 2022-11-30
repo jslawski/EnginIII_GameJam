@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     private void SetupGame()
     {
         TranslationDictionary.Setup();
-        this.SetupTestLevel();
+        //this.SetupTestLevel();
         this.StartLevel();
     }
 
