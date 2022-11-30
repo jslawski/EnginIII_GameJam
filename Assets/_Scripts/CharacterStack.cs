@@ -38,4 +38,20 @@ public class CharacterStack : MonoBehaviour
         GameObject blockInstance = Instantiate(this.blockPrefab, this.parentTransform);
         blockInstance.GetComponent<CharacterBlock>().Setup();
     }
+
+    public bool ProcessEntry(string entry)
+    {
+        CharacterBlock checkBlock = this.parentTransform.GetChild(this.parentTransform.childCount - 1).GetComponent<CharacterBlock>();
+        if (entry == checkBlock.ENCharacter)
+        {
+            Destroy(checkBlock.gameObject);
+            //Play correct sound
+            return true;
+        }
+        else
+        {
+            //Play incorrect sound
+            return false;
+        }
+    }
 }

@@ -5,8 +5,8 @@ using TMPro;
 
 public class CharacterBlock : MonoBehaviour
 {
-    private string ENCharacter;
-    private string JPCharacter;
+    public string ENCharacter;
+    public string JPCharacter;
 
     [SerializeField]
     private TextMeshProUGUI blockText;
@@ -16,6 +16,9 @@ public class CharacterBlock : MonoBehaviour
         int randomIndex = Random.Range(0, Level.levelCharacters_JP.Count);
         string randomCharacter = Level.levelCharacters_JP[randomIndex];
         this.blockText.text = randomCharacter;
+
+        this.ENCharacter = TranslationDictionary.JPtoEN[randomCharacter];
+        this.JPCharacter = randomCharacter;
 
         GetComponent<Transform>().SetAsFirstSibling();
     }

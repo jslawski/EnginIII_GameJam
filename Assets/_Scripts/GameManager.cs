@@ -6,7 +6,9 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private CharacterStack charStack;
-    
+
+    private int score = 0;
+
     private void Start()
     {
         this.SetupGame();  
@@ -19,12 +21,19 @@ public class GameManager : MonoBehaviour
         this.StartLevel();
     }
 
+    private void Update()
+    {
+        if (CharacterManager.vowel != string.Empty)
+        {
+            this.ProcessEntry();
+        }
+    }
+
     private void SetupTestLevel()
     {
         List<string> testList = new List<string>() 
         { 
-            "a", "i", "u", "e", "o",
-            "ka", "ki", "ku", "ke", "ko"
+            "a", "i", "u", "e", "o"            
         };
         Level.SetupNewLevel(testList, 1.0f);
     }
@@ -32,5 +41,19 @@ public class GameManager : MonoBehaviour
     private void StartLevel()
     {
         this.charStack.BeginGeneration();
+    }
+
+    private void ProcessEntry()
+    {
+        string characterEntry = CharacterManager.consonant + CharacterManager.vowel;
+        bool result = this.charStack.ProcessEntry(characterEntry);
+
+        if (result == true)
+        {
+            this.score++;
+        }
+
+        CharacterManager.consonant = string.Empty;
+        CharacterManager.vowel = string.Empty;
     }
 }
