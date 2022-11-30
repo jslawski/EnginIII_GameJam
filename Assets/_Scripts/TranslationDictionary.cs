@@ -66,7 +66,9 @@ public static class TranslationDictionary
         ENtoJP.Add("mo", "も");
 
         ENtoJP.Add("ya", "や");
+        ENtoJP.Add("yi", "yi");
         ENtoJP.Add("yu", "ゆ");
+        ENtoJP.Add("ye", "ye");
         ENtoJP.Add("yo", "よ");
     }
 

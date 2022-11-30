@@ -5,26 +5,40 @@ using UnityEngine;
 public static class Level
 {
     public static List<string> levelCharacters_JP;
-    public static float timeBetweenBlocks = 1.0f;
+    public static List<string> activeConsonants;
+    public static float timeBetweenBlocks = 3.0f;
 
-    public static void AddCharactersToLevel(List<string> enCharacters)
+    public static void Setup()
     {
-        if (levelCharacters_JP == null)
-        {
-            levelCharacters_JP = new List<string>();
-        }
+        levelCharacters_JP = new List<string>();
+        activeConsonants = new List<string>();
+    }
 
-        for (int i = 0; i < enCharacters.Count; i++)
+    public static void AddCharactersToLevel(string consonant)
+    {        
+        levelCharacters_JP.Add(TranslationDictionary.ENtoJP[(consonant + "a")]);
+        levelCharacters_JP.Add(TranslationDictionary.ENtoJP[(consonant + "i")]);
+        levelCharacters_JP.Add(TranslationDictionary.ENtoJP[(consonant + "u")]);
+        levelCharacters_JP.Add(TranslationDictionary.ENtoJP[(consonant + "e")]);
+        levelCharacters_JP.Add(TranslationDictionary.ENtoJP[(consonant + "o")]);
+
+        if (consonant != string.Empty)
         {
-            levelCharacters_JP.Add(TranslationDictionary.ENtoJP[enCharacters[i]]);
+            activeConsonants.Add(consonant);
         }
     }
 
-    public static void RemoveCharactersFromLevel(List<string> enCharacters)
+    public static void RemoveCharactersFromLevel(string consonant)
     {
-        for (int i = 0; i < enCharacters.Count; i++)
+        levelCharacters_JP.Remove(TranslationDictionary.ENtoJP[(consonant + "a")]);
+        levelCharacters_JP.Remove(TranslationDictionary.ENtoJP[(consonant + "i")]);
+        levelCharacters_JP.Remove(TranslationDictionary.ENtoJP[(consonant + "u")]);
+        levelCharacters_JP.Remove(TranslationDictionary.ENtoJP[(consonant + "e")]);
+        levelCharacters_JP.Remove(TranslationDictionary.ENtoJP[(consonant + "o")]);
+
+        if (consonant != string.Empty)
         {
-            levelCharacters_JP.Remove(TranslationDictionary.ENtoJP[enCharacters[i]]);
+            activeConsonants.Remove(consonant);
         }
     }
 

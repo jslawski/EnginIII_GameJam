@@ -41,6 +41,11 @@ public class CharacterStack : MonoBehaviour
 
     public bool ProcessEntry(string entry)
     {
+        if (this.parentTransform.childCount <= 0)
+        {
+            return false;
+        }
+
         CharacterBlock checkBlock = this.parentTransform.GetChild(this.parentTransform.childCount - 1).GetComponent<CharacterBlock>();
         if (entry == checkBlock.ENCharacter)
         {

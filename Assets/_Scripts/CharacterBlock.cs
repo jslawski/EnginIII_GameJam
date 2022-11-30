@@ -15,6 +15,13 @@ public class CharacterBlock : MonoBehaviour
     {
         int randomIndex = Random.Range(0, Level.levelCharacters_JP.Count);
         string randomCharacter = Level.levelCharacters_JP[randomIndex];
+
+        //Skip yi and ye
+        while (randomCharacter == "yi" || randomCharacter == "ye")
+        {
+            randomCharacter = Level.levelCharacters_JP[randomIndex];
+        }
+
         this.blockText.text = randomCharacter;
 
         this.ENCharacter = TranslationDictionary.JPtoEN[randomCharacter];

@@ -8,18 +8,43 @@ public class GameManager : MonoBehaviour
     private CharacterStack charStack;
 
     [SerializeField]
+    private Transform consonantsParent;
+    [SerializeField]
+    private GameObject consonantPrefab;
+
+    [SerializeField]
     private int score = 0;
+
+    private Dictionary<string, AudioClip> characterSounds;
+    private AudioSource vocalAudio;
 
     private void Start()
     {
-        this.SetupGame();  
+        this.SetupGame();
+        this.vocalAudio = GetComponent<AudioSource>();
     }
 
     private void SetupGame()
     {
-        TranslationDictionary.Setup();
-        //this.SetupTestLevel();
+        this.SetupAudioDictionary();
         this.StartLevel();
+    }
+
+    private void SetupAudioDictionary()
+    {
+        this.characterSounds = new Dictionary<string, AudioClip>();
+
+        foreach (KeyValuePair<string, string> entry in TranslationDictionary.ENtoJP)
+        {
+            AudioClip foundClip = Resources.Load<AudioClip>("Audio/" + entry.Key);
+
+            if (foundClip == null)
+            {
+                Debug.LogError("NULL!");
+            }
+
+            this.characterSounds.Add(entry.Key, foundClip);
+        }
     }
 
     private void Update()
@@ -41,12 +66,25 @@ public class GameManager : MonoBehaviour
 
     private void StartLevel()
     {
+        this.SetupConsonants();
         this.charStack.BeginGeneration();
+    }
+
+    private void SetupConsonants()
+    {
+        for (int i = 0; i < Level.activeConsonants.Count; i++)
+        {
+            GameObject consonantObject = Instantiate(this.consonantPrefab, this.consonantsParent);
+            consonantObject.GetComponent<Consonant>().Setup(Level.activeConsonants[i]);
+        }
     }
 
     private void ProcessEntry()
     {
         string characterEntry = CharacterManager.consonant + CharacterManager.vowel;
+
+        Debug.LogError("Processing: " + characterEntry);
+
         bool result = this.charStack.ProcessEntry(characterEntry);
 
         if (result == true)
@@ -54,7 +92,10 @@ public class GameManager : MonoBehaviour
             this.score++;
         }
 
+        this.vocalAudio.clip = this.characterSounds[characterEntry];
+        this.vocalAudio.Play();
+
         CharacterManager.consonant = string.Empty;
-        CharacterManager.vowel = string.Empty;
+        CharacterManager.vowel = string.Empty;        
     }
 }

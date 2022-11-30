@@ -4,23 +4,20 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class Consonant : MonoBehaviour, IPointerClickHandler
+public class Consonant : MonoBehaviour, IPointerDownHandler
 {    
     private string character;
     private TextMeshProUGUI consonantText;
-
-    private void Awake()
+    
+    public void Setup(string character)
     {
-        this.Setup(character);
-    }
+        this.character = character;
 
-    private void Setup(string character)
-    {
         this.consonantText = GetComponentInChildren<TextMeshProUGUI>();
         this.consonantText.text = character.ToUpper();
     }
 
-    public void OnPointerClick(PointerEventData data)
+    public void OnPointerDown(PointerEventData data)
     {
         CharacterManager.consonant = this.character.ToLower();
     }

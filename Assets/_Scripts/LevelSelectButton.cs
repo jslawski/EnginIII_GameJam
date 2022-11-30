@@ -10,12 +10,14 @@ public class LevelSelectButton : MonoBehaviour, IPointerClickHandler
     private bool charactersActive = false;
 
     [SerializeField]
-    private List<string> associatedCharacters;
+    private string consonant = string.Empty;
     
     [SerializeField]
     private GameObject maskObject;
 
     private TextMeshProUGUI charactersText;
+
+    private List<string> associatedCharacters;
 
     private void Start()
     {
@@ -23,14 +25,23 @@ public class LevelSelectButton : MonoBehaviour, IPointerClickHandler
 
         if (this.charactersActive == true)
         {
-            Level.AddCharactersToLevel(this.associatedCharacters);
+            Level.AddCharactersToLevel(this.consonant);
             this.maskObject.SetActive(false);
         }
     }
 
     private void Setup()
     {
-        this.charactersText = GetComponentInChildren<TextMeshProUGUI>();
+        this.associatedCharacters = new List<string>
+        {
+            (this.consonant + "a"),
+            (this.consonant + "i"),
+            (this.consonant + "u"),
+            (this.consonant + "e"),
+            (this.consonant + "o"),
+        };
+
+        this.charactersText = GetComponentInChildren<TextMeshProUGUI>();        
         this.charactersText.text = this.GetJPCharacters();
     }
 
@@ -40,9 +51,12 @@ public class LevelSelectButton : MonoBehaviour, IPointerClickHandler
 
         for (int i = 0; i < this.associatedCharacters.Count; i++)
         {
-            jpString += TranslationDictionary.ENtoJP[this.associatedCharacters[i]];
+            if (this.associatedCharacters[i] != "yi" && this.associatedCharacters[i] != "ye")
+            {
+                jpString += TranslationDictionary.ENtoJP[this.associatedCharacters[i]];
+            }
         }
-
+        
         return jpString;
     }
 
@@ -55,12 +69,12 @@ public class LevelSelectButton : MonoBehaviour, IPointerClickHandler
     {
         if (this.charactersActive == false)
         {
-            Level.AddCharactersToLevel(this.associatedCharacters);
+            Level.AddCharactersToLevel(this.consonant);
             this.charactersActive = true;
         }
         else
         {
-            Level.RemoveCharactersFromLevel(this.associatedCharacters);
+            Level.RemoveCharactersFromLevel(this.consonant);
             this.charactersActive = false;
         }
 
