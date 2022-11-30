@@ -14,6 +14,9 @@ public class LevelSelectManager : MonoBehaviour
 
     void Awake()
     {
+        Screen.SetResolution(540, 960, false);
+        Screen.fullScreen = false;
+
         TranslationDictionary.Setup();
         Level.Setup();
     }
