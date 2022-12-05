@@ -16,6 +16,9 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        this.inputScreenPosition = Vector3.zero;
+        this.isDragging = false;
+
         this.HandleTouchInput();
         this.HandleMouseInput();
 
@@ -42,7 +45,7 @@ public class InputManager : MonoBehaviour
     {
         if (this.isDragging == false)
         {
-            if (this.vowelChar != null && this.consonantChar != null)
+            if (this.vowelChar != null)
             {
                 this.SubmitInput();
             }
@@ -52,6 +55,7 @@ public class InputManager : MonoBehaviour
         }
 
         CharacterObject inputChar = this.GetObjectAtPosition(this.inputScreenPosition);
+        //Debug.LogError("Hitting " + inputChar.enChar);
         if (inputChar != null)
         {
             this.SelectInputChar(inputChar);
@@ -65,12 +69,9 @@ public class InputManager : MonoBehaviour
     private void HandleTouchInput()
     {
         if (Input.touchCount == 1)
-        {
+        {            
             this.isDragging = true;
-        }
-        else
-        {
-            this.isDragging = false;
+            this.inputScreenPosition = Input.GetTouch(0).position;
         }
     }
 
@@ -79,10 +80,7 @@ public class InputManager : MonoBehaviour
         if (Input.GetMouseButton(0) == true)
         {
             this.isDragging = true;
-        }
-        else
-        {
-            this.isDragging = false;
+            this.inputScreenPosition = Input.mousePosition;
         }
     }
 
@@ -108,7 +106,14 @@ public class InputManager : MonoBehaviour
 
     private void SubmitInput()
     {
-        string fullChar = this.vowelChar.enChar + this.consonantChar.enChar;
+        string fullChar = string.Empty;
+
+        if (this.consonantChar != null)
+        {
+            fullChar += this.consonantChar.enChar;
+        }
+
+        fullChar += this.vowelChar.enChar;        
 
         bool result = this.charStack.ProcessEntry(fullChar);
         this.inputObserver.OnNotify(fullChar, result);

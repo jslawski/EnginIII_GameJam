@@ -17,11 +17,14 @@ public class CharacterObject : MonoBehaviour
     [SerializeField]
     private GameObject selectedSprite;
 
+    private Collider objCollider;
+
     private CharacterGroup charGroup;
 
     private void Start()
     {
         this.charGroup = GetComponentInParent<CharacterGroup>();
+        this.objCollider = GetComponent<Collider>();
 
         if (this.isVowel == true)
         {
@@ -49,18 +52,20 @@ public class CharacterObject : MonoBehaviour
     public void SelectObject()
     {
         this.selectedSprite.SetActive(true);
-        this.disabledSprite.SetActive(false);        
+        this.disabledSprite.SetActive(false);
     }
 
     public void UnselectObject()
     {
         this.selectedSprite.SetActive(false);
-        this.disabledSprite.SetActive(false);        
+        this.disabledSprite.SetActive(false);
+        this.objCollider.enabled = true;
     }
 
     public void DisableObject()
     {
         this.selectedSprite.SetActive(false);
         this.disabledSprite.SetActive(true);
+        this.objCollider.enabled = false;
     }
 }

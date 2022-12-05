@@ -6,10 +6,10 @@ public enum GroupTrigger { Selected, Unselected }
 
 public class CharacterGroup : MonoBehaviour
 {
-    private CharacterObject[] charObjects;
+    [HideInInspector]
+    public CharacterObject[] charObjects;
     
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         this.charObjects = GetComponentsInChildren<CharacterObject>();
     }
@@ -22,6 +22,7 @@ public class CharacterGroup : MonoBehaviour
                 this.OnCharacterSelected(groupObject);
                 break;
             case GroupTrigger.Unselected:
+                this.OnCharacterUnselected();
                 break;
             default:
                 Debug.LogError("Unknown trigger: " + trigger.ToString() + ". Unable to update group.");
