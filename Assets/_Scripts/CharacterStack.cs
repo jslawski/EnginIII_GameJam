@@ -5,21 +5,19 @@ using UnityEngine;
 public class CharacterStack : MonoBehaviour
 {
     private RectTransform parentTransform;
-    
+
+    [SerializeField]
+    private GameManager gameManager;
     [SerializeField]
     private GameObject blockPrefab;    
     [SerializeField]
     private int maxBlocks = 10;
 
-    [SerializeField]
-    private AudioSource correctSound;
-    [SerializeField]
-    private AudioSource incorrectSound;
-
     // Start is called before the first frame update
     void Start()
     {
         this.parentTransform = GetComponent<RectTransform>();
+        this.BeginGeneration();
     }
 
     public void BeginGeneration()
@@ -37,7 +35,7 @@ public class CharacterStack : MonoBehaviour
             yield return new WaitForSeconds(Level.timeBetweenBlocks);
         }
 
-        GameManager.gameOver = true;
+        this.gameManager.TriggerGameOver();
     }
 
     private void AddBlock()
@@ -57,12 +55,10 @@ public class CharacterStack : MonoBehaviour
         if (entry == checkBlock.ENCharacter)
         {
             Destroy(checkBlock.gameObject);
-            this.correctSound.Play();
             return true;
         }
         else
         {
-            this.incorrectSound.Play();
             checkBlock.SwapToEnglish();
             return false;
         }

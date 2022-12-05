@@ -10,6 +10,8 @@ public class InputManager : MonoBehaviour
 
     [SerializeField]
     private CharacterStack charStack;
+    [SerializeField]
+    private InputObserver inputObserver;
 
     // Update is called once per frame
     void Update()
@@ -106,7 +108,10 @@ public class InputManager : MonoBehaviour
 
     private void SubmitInput()
     {
-        this.charStack.ProcessEntry(this.vowelChar.enChar + this.consonantChar.enChar);
+        string fullChar = this.vowelChar.enChar + this.consonantChar.enChar;
+
+        bool result = this.charStack.ProcessEntry(fullChar);
+        this.inputObserver.OnNotify(fullChar, result);
     }
 
     private void ClearInputChars()

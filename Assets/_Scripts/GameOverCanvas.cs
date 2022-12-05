@@ -8,11 +8,14 @@ public class GameOverCanvas : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI scoreText;
+    [SerializeField]
+    private TextMeshProUGUI streakText;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.scoreText.text = "Final Score:\n" + GameManager.score.ToString();
+        this.scoreText.text = "Final Score:\n" + InputObserver.score.ToString();
+        this.streakText.text = "Best Streak:\n" + InputObserver.bestStreak.ToString();
     }
 
     public void RetryClicked()
