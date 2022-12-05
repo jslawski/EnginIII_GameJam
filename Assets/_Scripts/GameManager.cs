@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        this.SetupGame();
-        this.gameAudio = GetComponent<AudioSource>();
+        //this.SetupGame();
+        //this.gameAudio = GetComponent<AudioSource>();
     }
 
     private void SetupGame()
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < Level.activeConsonants.Count; i++)
         {
             GameObject consonantObject = Instantiate(this.consonantPrefab, this.consonantsParent);
-            consonantObject.GetComponent<Consonant>().Setup(Level.activeConsonants[i]);
+            //consonantObject.GetComponent<Consonant>().Setup(Level.activeConsonants[i]);
         }
     }
 
