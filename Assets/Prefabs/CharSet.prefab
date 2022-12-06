@@ -395,6 +395,8 @@ MonoBehaviour:
   highlightObject: {fileID: 0}
   buttonAudio: {fileID: 6583934917018016955}
   clicked: 0
+  virtualClick: 0
+  buttonText: {fileID: 4528815506309270664}
 --- !u!114 &4880125124569218738
 MonoBehaviour:
   m_ObjectHideFlags: 0

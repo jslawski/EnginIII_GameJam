@@ -18,7 +18,6 @@ public class UnselectedState : ButtonState
         this.controller.UnselectBehavior();
     }
 
-
     public override void UpdateState()
     {
         if (this.controller.clicked == true)

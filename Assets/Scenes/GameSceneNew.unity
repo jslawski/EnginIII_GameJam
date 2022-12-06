@@ -2271,7 +2271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402a1d7d50e5ae64caa44c914152932d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 963194229}
   blockPrefab: {fileID: 1522631898023365803, guid: 56c945605593196469cee08c08d0b26d, type: 3}
   maxBlocks: 7
 --- !u!114 &1125966955

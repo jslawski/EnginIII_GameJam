@@ -13,8 +13,11 @@ public class SelectableButton : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private AudioSource buttonAudio;
 
+    [HideInInspector]
     public bool clicked = false;
-    
+    [HideInInspector]
+    public bool virtualClick = false;
+
     protected virtual void Start()
     {
         this.ChangeState(new UnselectedState());    
@@ -35,9 +38,10 @@ public class SelectableButton : MonoBehaviour, IPointerClickHandler
         this.ClickButton();
     }
 
-    public void ClickButton()
+    public void ClickButton(bool isVirtual = false)
     {
         this.clicked = true;
+        this.virtualClick = isVirtual;
     }
 
     public void ChangeState(ButtonState newState)
@@ -46,6 +50,7 @@ public class SelectableButton : MonoBehaviour, IPointerClickHandler
         this.curState.Enter(this);
 
         this.clicked = false;
+        this.virtualClick = false;
     }
 
     public virtual void SelectBehavior()

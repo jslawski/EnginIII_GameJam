@@ -8,12 +8,12 @@ public class MenuGroupButton : SelectableButton, IPointerClickHandler
 {
     private MenuCharacterButton[] charButtons;
 
+    [SerializeField]
     private TextMeshProUGUI buttonText;
 
     private void Awake()
     {
         this.charButtons = GetComponentsInChildren<MenuCharacterButton>();
-        this.buttonText = GetComponent<TextMeshProUGUI>();
     }
 
     private void AddGroupCharacters()
@@ -25,7 +25,7 @@ public class MenuGroupButton : SelectableButton, IPointerClickHandler
                 continue;
             }
 
-            charButton.ClickButton();
+            charButton.ClickButton(true);
         }
     }
 
@@ -38,17 +38,62 @@ public class MenuGroupButton : SelectableButton, IPointerClickHandler
                 continue;
             }
 
-            charButton.ClickButton();
+            charButton.ClickButton(true);
         }
     }
 
+    public bool AllButtonsSelected()
+    {
+        bool allSelected = true;
+
+        foreach (MenuCharacterButton charButton in this.charButtons)
+        {
+            if (charButton.curState == null || charButton.curState.GetType() == typeof(UnselectedState))
+            {
+                allSelected = false;
+            }            
+        }
+
+        return allSelected;
+    }
+
+    public void NotifyMenuCharacterButtonClick()
+    {
+        if (this.curState == null)
+        {
+            return;
+        }
+
+        if (this.AllButtonsSelected() == true)            
+        {
+            if (this.curState.GetType() == typeof(UnselectedState))
+            {
+                this.ClickButton(true);
+            }
+        }
+        else if (this.curState.GetType() == typeof(SelectedState))
+        {
+            this.ClickButton(true);
+        }
+    }
+    
     public override void SelectBehavior()
     {
-        this.AddGroupCharacters();
+        if (this.virtualClick == false)
+        {
+            this.AddGroupCharacters();
+        }
+
+        this.buttonText.text = "Unselect Group";
     }
 
     public override void UnselectBehavior()
     {
-        this.RemoveGroupCharacters();
+        if (this.virtualClick == false)
+        {
+            this.RemoveGroupCharacters();
+        }
+        
+        this.buttonText.text = "Select Group";
     }
 }

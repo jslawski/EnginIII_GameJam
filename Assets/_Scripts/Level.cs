@@ -32,7 +32,7 @@ public static class Level
             }
         }
 
-        levelCharacters_JP.Add(character);
+        levelCharacters_JP.Add(characterJP);
     }
 
     public static void RemoveCharacterFromLevel(string character)
@@ -53,6 +53,6 @@ public static class Level
             }
         }
 
-        levelCharacters_JP.Remove(character);
+        levelCharacters_JP.Remove(characterJP);
     }
 }
