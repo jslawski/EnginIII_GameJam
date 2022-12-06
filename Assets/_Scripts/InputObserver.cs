@@ -23,6 +23,7 @@ public class InputObserver : MonoBehaviour
     private void Start()
     {
         score = 0;
+        bestStreak = 0;
         this.correctSound = Resources.Load<AudioClip>("Audio/correctSound");
         this.incorrectSound = Resources.Load<AudioClip>("Audio/incorrectSound");
         this.SetupAudioDictionary();

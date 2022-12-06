@@ -12,6 +12,10 @@ public class InputManager : MonoBehaviour
     private CharacterStack charStack;
     [SerializeField]
     private InputObserver inputObserver;
+    [SerializeField]
+    private LineRenderer dragLine;
+    [SerializeField]
+    private AudioSource dragAudio;
 
     // Update is called once per frame
     void Update()
@@ -23,6 +27,8 @@ public class InputManager : MonoBehaviour
         this.HandleMouseInput();
 
         this.ProcessInput();
+
+        this.RenderDragLine();
     }
 
     private CharacterObject GetObjectAtPosition(Vector3 screenSpacePosition)
@@ -131,5 +137,38 @@ public class InputManager : MonoBehaviour
             this.consonantChar.UpdateStatus(GroupTrigger.Unselected);
             this.consonantChar = null;
         }
-    }    
+    }
+
+    private void RenderDragLine()
+    {
+        if (this.isDragging == false || this.consonantChar == null)
+        {
+            this.dragLine.SetPosition(0, Vector3.zero);
+            this.dragLine.SetPosition(1, Vector3.zero);
+            this.dragAudio.Stop();
+            return;
+        }
+
+        if (this.dragAudio.isPlaying == false)
+        {
+            this.dragAudio.Play();
+        }
+
+        if (this.consonantChar != null)
+        {
+            Vector3 consonantPosition = this.consonantChar.gameObject.GetComponent<Transform>().position;
+            this.dragLine.SetPosition(0, new Vector3(consonantPosition.x, consonantPosition.y, 0.1f));
+        }
+
+        if (this.vowelChar != null)
+        {
+            Vector3 vowelPosition = this.vowelChar.gameObject.GetComponent<Transform>().position;
+            this.dragLine.SetPosition(1, new Vector3(vowelPosition.x, vowelPosition.y, 0.1f));
+        }
+        else
+        {
+            Vector3 worldSpaceMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            this.dragLine.SetPosition(1, new Vector3(worldSpaceMousePosition.x, worldSpaceMousePosition.y, 0.1f));
+        }
+    }
 }
