@@ -7,10 +7,16 @@ public static class TranslationDictionary
     public static Dictionary<string, string> ENtoJP;
     public static Dictionary<string, string> JPtoEN;
 
+    public static List<string> ENList;
+    public static List<string> JPList;
+
     public static void Setup()
     {
         SetupENtoJP();
         SetupJPtoEN();
+
+        SetupENList();
+        SetupJPList();
     }
 
     private static void SetupENtoJP()
@@ -79,6 +85,26 @@ public static class TranslationDictionary
         foreach (KeyValuePair<string, string> entry in ENtoJP)
         {
             JPtoEN.Add(entry.Value, entry.Key);
+        }
+    }
+
+    private static void SetupENList()
+    {
+        ENList = new List<string>();
+
+        foreach (KeyValuePair<string, string> entry in ENtoJP)
+        {
+            ENList.Add(entry.Key);
+        }
+    }
+
+    private static void SetupJPList()
+    {
+        JPList = new List<string>();
+
+        foreach (KeyValuePair<string, string> entry in ENtoJP)
+        {
+            JPList.Add(entry.Value);
         }
     }
 }

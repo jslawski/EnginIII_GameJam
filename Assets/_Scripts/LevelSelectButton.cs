@@ -25,7 +25,7 @@ public class LevelSelectButton : MonoBehaviour, IPointerClickHandler
 
         if (this.charactersActive == true)
         {
-            Level.AddCharactersToLevel(this.consonant);
+            //Level.AddCharactersToLevel(this.consonant);
             this.maskObject.SetActive(false);
         }
     }
@@ -69,12 +69,12 @@ public class LevelSelectButton : MonoBehaviour, IPointerClickHandler
     {
         if (this.charactersActive == false)
         {
-            Level.AddCharactersToLevel(this.consonant);
+            //Level.AddCharactersToLevel(this.consonant);
             this.charactersActive = true;
         }
         else
         {
-            Level.RemoveCharactersFromLevel(this.consonant);
+            //Level.RemoveCharactersFromLevel(this.consonant);
             this.charactersActive = false;
         }
 

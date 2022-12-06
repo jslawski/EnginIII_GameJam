@@ -14,47 +14,45 @@ public static class Level
         activeConsonants = new List<string>();
     }
 
-    public static void AddCharactersToLevel(string consonant)
-    {        
-        levelCharacters_JP.Add(TranslationDictionary.ENtoJP[(consonant + "a")]);
-        levelCharacters_JP.Add(TranslationDictionary.ENtoJP[(consonant + "i")]);
-        levelCharacters_JP.Add(TranslationDictionary.ENtoJP[(consonant + "u")]);
-        levelCharacters_JP.Add(TranslationDictionary.ENtoJP[(consonant + "e")]);
-        levelCharacters_JP.Add(TranslationDictionary.ENtoJP[(consonant + "o")]);
+    public static void AddCharacterToLevel(string character)
+    {
+        string characterJP = TranslationDictionary.ENtoJP[character];
 
-        if (consonant != string.Empty)
+        if (levelCharacters_JP.Contains(characterJP))
         {
-            activeConsonants.Add(consonant);
+            return;
         }
+        
+        if (character.Length > 1)
+        {
+            string consonant = character[0].ToString();
+            if (activeConsonants.Contains(consonant) == false)
+            {
+                activeConsonants.Add(consonant);
+            }
+        }
+
+        levelCharacters_JP.Add(character);
     }
 
-    public static void RemoveCharactersFromLevel(string consonant)
+    public static void RemoveCharacterFromLevel(string character)
     {
-        levelCharacters_JP.Remove(TranslationDictionary.ENtoJP[(consonant + "a")]);
-        levelCharacters_JP.Remove(TranslationDictionary.ENtoJP[(consonant + "i")]);
-        levelCharacters_JP.Remove(TranslationDictionary.ENtoJP[(consonant + "u")]);
-        levelCharacters_JP.Remove(TranslationDictionary.ENtoJP[(consonant + "e")]);
-        levelCharacters_JP.Remove(TranslationDictionary.ENtoJP[(consonant + "o")]);
+        string characterJP = TranslationDictionary.ENtoJP[character];
 
-        if (consonant != string.Empty)
+        if (levelCharacters_JP.Contains(characterJP) == false)
         {
-            activeConsonants.Remove(consonant);
+            return;
         }
-    }
 
-    public static void SetupNewLevel(List<string> enCharacters, float blockTime = 5.0f)
-    {
-        CreateJPCharList(enCharacters);
-        timeBetweenBlocks = blockTime;
-    }
-
-    private static void CreateJPCharList(List<string> enCharacters)
-    {
-        levelCharacters_JP = new List<string>();
-
-        for (int i = 0; i < enCharacters.Count; i++)
+        if (character.Length > 1)
         {
-            levelCharacters_JP.Add(TranslationDictionary.ENtoJP[enCharacters[i]]);
+            string consonant = character[0].ToString();
+            if (activeConsonants.Contains(consonant) == true)
+            {
+                activeConsonants.Remove(consonant);
+            }
         }
+
+        levelCharacters_JP.Remove(character);
     }
 }

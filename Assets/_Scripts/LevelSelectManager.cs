@@ -11,7 +11,7 @@ public class LevelSelectManager : MonoBehaviour
     private Button startButton;
     [SerializeField]
     private TextMeshProUGUI startText;
-
+    
     void Awake()
     {
         Screen.SetResolution(540, 960, false);
@@ -19,6 +19,18 @@ public class LevelSelectManager : MonoBehaviour
 
         TranslationDictionary.Setup();
         Level.Setup();
+
+        this.SetupMenuCharacterButtons();
+    }
+
+    private void SetupMenuCharacterButtons()
+    {
+        MenuCharacterButton[] menuCharacterButtons = GetComponentsInChildren<MenuCharacterButton>();
+
+        for (int i = 0; i < menuCharacterButtons.Length; i++)
+        {
+            menuCharacterButtons[i].Setup(TranslationDictionary.ENList[i]);
+        }
     }
 
     public void OnStartClicked()

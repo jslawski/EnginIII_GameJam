@@ -55,7 +55,7 @@ public class InputManager : MonoBehaviour
         }
 
         CharacterObject inputChar = this.GetObjectAtPosition(this.inputScreenPosition);
-        //Debug.LogError("Hitting " + inputChar.enChar);
+
         if (inputChar != null)
         {
             this.SelectInputChar(inputChar);
