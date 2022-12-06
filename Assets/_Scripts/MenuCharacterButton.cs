@@ -17,6 +17,8 @@ public class MenuCharacterButton : SelectableButton
 
     private MenuGroupButton groupButton;
 
+    private bool isSetup = false;  //Hacky fix to prevent buttonAudio from playing on game start
+
     protected override void Start()
     {
         this.groupButton = GetComponentInParent<MenuGroupButton>();
@@ -27,7 +29,16 @@ public class MenuCharacterButton : SelectableButton
         if (this.charData.enChar.Length == 1)
         {
             this.ClickButton();
-        }        
+        }
+
+        StartCoroutine(this.DelaySetup());
+    }
+
+    private IEnumerator DelaySetup()
+    {
+        yield return null;
+
+        this.isSetup = true;
     }
 
     public void Setup(string enChar)
@@ -51,6 +62,12 @@ public class MenuCharacterButton : SelectableButton
         if (this.virtualClick == false)
         {
             this.groupButton.NotifyMenuCharacterButtonClick();
+
+            if (this.buttonAudio != null && this.isSetup == true)
+            {
+                this.buttonAudio.pitch = 1.5f;
+                this.buttonAudio.Play();
+            }
         }
 
     }
@@ -62,6 +79,12 @@ public class MenuCharacterButton : SelectableButton
         if (this.virtualClick == false)
         {
             this.groupButton.NotifyMenuCharacterButtonClick();
+
+            if (this.buttonAudio != null && this.isSetup == true)
+            {
+                this.buttonAudio.pitch = 0.5f;
+                this.buttonAudio.Play();
+            }
         }
     }    
 }

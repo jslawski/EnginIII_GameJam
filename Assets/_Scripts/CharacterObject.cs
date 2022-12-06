@@ -16,6 +16,8 @@ public class CharacterObject : SelectableButton
     private Collider objCollider;
     private CharacterGroup charGroup;
 
+    private bool playedSelectedSound = false;
+
     private void Awake()
     {
         this.charGroup = GetComponentInParent<CharacterGroup>();
@@ -58,45 +60,25 @@ public class CharacterObject : SelectableButton
         this.charGroup.OnNotify(this, newStatus);
     }
 
-    public override void ClickButton(bool isVirtual = false)
+    public override void SelectBehavior()
     {
-        base.ClickButton(isVirtual);
-
-        if (this.buttonAudio != null)
+        if (this.buttonAudio != null && this.playedSelectedSound == false)
         {
+            this.buttonAudio.pitch = Random.Range(0.5f, 1.5f);
             this.buttonAudio.Play();
+            this.playedSelectedSound = true;
         }
     }
 
     public override void UnselectBehavior()
     {
-        this.objCollider.enabled = true;
+        this.playedSelectedSound = false;
+        this.objCollider.enabled = true;        
     }
 
     public override void DisableBehavior()
     {
         this.objCollider.enabled = false;
+        this.playedSelectedSound = false;
     }
-
-    /*
-    public void SelectObject()
-    {
-        this.selectedSprite.SetActive(true);
-        this.disabledSprite.SetActive(false);
-    }
-
-    public void UnselectObject()
-    {
-        this.selectedSprite.SetActive(false);
-        this.disabledSprite.SetActive(false);
-        this.objCollider.enabled = true;
-    }
-
-    public void DisableObject()
-    {
-        this.selectedSprite.SetActive(false);
-        this.disabledSprite.SetActive(true);
-        this.objCollider.enabled = false;
-    }
-    */
 }

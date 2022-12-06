@@ -35,6 +35,21 @@ public static class Level
         levelCharacters_JP.Add(characterJP);
     }
 
+    private static bool ContainsSameConsonant(string consonant)
+    {
+        for (int i = 0; i < levelCharacters_JP.Count; i++)
+        {
+            string enCharacter = TranslationDictionary.JPtoEN[levelCharacters_JP[i]];
+
+            if (enCharacter[0].ToString() == consonant)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public static void RemoveCharacterFromLevel(string character)
     {
         string characterJP = TranslationDictionary.ENtoJP[character];
@@ -44,15 +59,16 @@ public static class Level
             return;
         }
 
+        levelCharacters_JP.Remove(characterJP);
+
         if (character.Length > 1)
         {
             string consonant = character[0].ToString();
-            if (activeConsonants.Contains(consonant) == true)
+            if (activeConsonants.Contains(consonant) == true && 
+                ContainsSameConsonant(consonant) == false)
             {
                 activeConsonants.Remove(consonant);
             }
-        }
-
-        levelCharacters_JP.Remove(characterJP);
+        }        
     }
 }

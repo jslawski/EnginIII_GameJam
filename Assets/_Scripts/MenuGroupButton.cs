@@ -11,9 +11,24 @@ public class MenuGroupButton : SelectableButton, IPointerClickHandler
     [SerializeField]
     private TextMeshProUGUI buttonText;
 
+    private bool isSetup = false;  //Hacky fix to prevent buttonAudio from playing on game start
+
     private void Awake()
     {
         this.charButtons = GetComponentsInChildren<MenuCharacterButton>();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        StartCoroutine(this.DelaySetup());
+    }
+
+    private IEnumerator DelaySetup()
+    {
+        yield return null;
+
+        this.isSetup = true;
     }
 
     private void AddGroupCharacters()
@@ -82,6 +97,12 @@ public class MenuGroupButton : SelectableButton, IPointerClickHandler
         if (this.virtualClick == false)
         {
             this.AddGroupCharacters();
+
+            if (this.buttonAudio != null && this.isSetup == true)
+            {
+                this.buttonAudio.pitch = 1.5f;
+                this.buttonAudio.Play();
+            }
         }
 
         this.buttonText.text = "Unselect Group";
@@ -92,6 +113,12 @@ public class MenuGroupButton : SelectableButton, IPointerClickHandler
         if (this.virtualClick == false)
         {
             this.RemoveGroupCharacters();
+
+            if (this.buttonAudio != null && this.isSetup == true)
+            {
+                this.buttonAudio.pitch = 0.5f;
+                this.buttonAudio.Play();
+            }
         }
         
         this.buttonText.text = "Select Group";

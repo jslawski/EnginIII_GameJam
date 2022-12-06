@@ -33,11 +33,6 @@ public class SelectableButton : MonoBehaviour, IPointerClickHandler
 
     public virtual void OnPointerClick(PointerEventData data)
     {
-        if (this.buttonAudio != null)
-        {
-            this.buttonAudio.Play();
-        }
-
         this.ClickButton();
     }
 
