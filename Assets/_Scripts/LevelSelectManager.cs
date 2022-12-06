@@ -43,12 +43,12 @@ public class LevelSelectManager : MonoBehaviour
         if (Level.activeConsonants.Count > 4)
         {
             this.startButton.interactable = false;
-            this.startText.text = "Too many characters!";
+            this.startText.text = "Too many groups!";
         }
-        else if (Level.levelCharacters_JP.Count <= 0)
+        else if (Level.levelCharacters_JP.Count < 3)
         {
             this.startButton.interactable = false;
-            this.startText.text = "Select at least one character set!";
+            this.startText.text = "Select at least 3 characters!";
         }
         else
         {

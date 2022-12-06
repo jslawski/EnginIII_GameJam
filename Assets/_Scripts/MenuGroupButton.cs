@@ -20,7 +20,7 @@ public class MenuGroupButton : SelectableButton, IPointerClickHandler
     {
         foreach (MenuCharacterButton charButton in this.charButtons)
         {
-            if (charButton.curState.GetType() == typeof(SelectedState))
+            if (charButton.curState == null || charButton.curState.GetType() == typeof(SelectedState))
             {
                 continue;
             }
