@@ -52,18 +52,13 @@ public class InputObserver : MonoBehaviour
             if (score % this.timeIncreaseThreshold == 0)
             {
                 Level.timeBetweenBlocks -= this.timeSpeedIncrease;
-            } 
+            }            
         }
         else
         {
             this.resultSound.clip = this.incorrectSound;
             StartCoroutine(this.PlayResultAudio(character));
-
-            if (this.curStreak > bestStreak)
-            {
-                bestStreak = this.curStreak;
-            }
-
+            
             this.curStreak = 0;            
         }
     }
@@ -76,6 +71,11 @@ public class InputObserver : MonoBehaviour
 
         score++;
         this.curStreak++;
+
+        if (this.curStreak > bestStreak)
+        {
+            bestStreak = this.curStreak;
+        }
     }
 
     private IEnumerator PlayResultAudio(string characterEntry)
