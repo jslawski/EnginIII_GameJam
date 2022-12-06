@@ -7,12 +7,20 @@ public class SelectedState : ButtonState
     public override void Enter(SelectableButton buttonController)
     {
         base.Enter(buttonController);
-        
-        this.controller.maskObject.SetActive(false);
 
-        if (this.controller.highlightObject != null)
+        if (this.controller.unselectedMask != null)
         {
-            this.controller.highlightObject.SetActive(true);
+            this.controller.unselectedMask.SetActive(false);
+        }
+
+        if (this.controller.selectedMask != null)
+        {
+            this.controller.selectedMask.SetActive(true);
+        }
+
+        if (this.controller.disabledMask != null)
+        {
+            this.controller.disabledMask.SetActive(false);
         }
 
         this.controller.SelectBehavior();
@@ -21,6 +29,8 @@ public class SelectedState : ButtonState
 
     public override void UpdateState()
     {
+        base.UpdateState();
+
         if (this.controller.clicked == true)
         {            
             this.controller.ChangeState(new UnselectedState());

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MenuCharacter
 {
-    public const int MASTERY_TARGET = 20;
+    public const int MASTERY_TARGET = 10;
 
     public string enChar;
     public string jpChar;

@@ -339,10 +339,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 282088db5269b564cb119d8993894390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maskObject: {fileID: 2447302622697288483}
-  highlightObject: {fileID: 0}
+  unselectedMask: {fileID: 2447302622697288483}
+  selectedMask: {fileID: 0}
+  disabledMask: {fileID: 0}
   buttonAudio: {fileID: 3931256515739015299}
   clicked: 0
+  virtualClick: 0
+  disabled: 0
   charText: {fileID: 3228368104301805050}
   masteryFillImage: {fileID: 7775136958435361}
   masteryStar: {fileID: 5226280059917040407}

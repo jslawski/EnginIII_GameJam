@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GroupTrigger { Selected, Unselected }
+public enum GroupTrigger { Selected, Unselected, Disabled }
 
 public class CharacterGroup : MonoBehaviour
 {
@@ -24,6 +24,8 @@ public class CharacterGroup : MonoBehaviour
             case GroupTrigger.Unselected:
                 this.OnCharacterUnselected();
                 break;
+            case GroupTrigger.Disabled:                
+                break;
             default:
                 Debug.LogError("Unknown trigger: " + trigger.ToString() + ". Unable to update group.");
                 return;
@@ -36,11 +38,11 @@ public class CharacterGroup : MonoBehaviour
         {
             if (charObj == selectedObject)
             {
-                charObj.SelectObject();
+                charObj.ChangeState(new SelectedState());
             }
             else
             {
-                charObj.DisableObject();
+                charObj.disabled = true;
             }            
         }
     }
@@ -49,7 +51,8 @@ public class CharacterGroup : MonoBehaviour
     {
         foreach (CharacterObject charObj in this.charObjects)
         {
-            charObj.UnselectObject();
+            charObj.disabled = false;
+            charObj.ChangeState(new UnselectedState());
         }
     }
 }

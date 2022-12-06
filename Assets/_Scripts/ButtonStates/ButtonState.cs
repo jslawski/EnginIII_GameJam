@@ -10,5 +10,11 @@ public class ButtonState
     {
         this.controller = buttonController;
     }
-    public virtual void UpdateState() { }
+    public virtual void UpdateState()
+    {
+        if (this.controller.disabled == true)
+        {
+            this.controller.ChangeState(new DisabledState());
+        }
+    }
 }

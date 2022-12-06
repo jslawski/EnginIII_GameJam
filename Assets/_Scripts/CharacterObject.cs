@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CharacterObject : MonoBehaviour
+public class CharacterObject : SelectableButton
 {
     public string enChar;
     public bool isVowel;
@@ -12,20 +12,20 @@ public class CharacterObject : MonoBehaviour
     private TextMeshProUGUI charUI;
     [SerializeField]
     private SpriteRenderer bgSprite;
-    [SerializeField]
-    private GameObject disabledSprite;
-    [SerializeField]
-    private GameObject selectedSprite;
-
+    
     private Collider objCollider;
-
     private CharacterGroup charGroup;
 
-    private void Start()
+    private void Awake()
     {
         this.charGroup = GetComponentInParent<CharacterGroup>();
         this.objCollider = GetComponent<Collider>();
+    }
 
+    protected override void Start()
+    {
+        base.Start();
+        
         if (this.isVowel == true)
         {
             this.bgSprite.sprite = Resources.Load<Sprite>("Sprites/blueCircle");
@@ -36,7 +36,7 @@ public class CharacterObject : MonoBehaviour
         }
     }
 
-    public virtual void Setup(string newChar, bool vowel)
+    public void Setup(string newChar, bool vowel)
     {
         this.enChar = newChar;
         this.isVowel = vowel;
@@ -46,9 +46,39 @@ public class CharacterObject : MonoBehaviour
 
     public void UpdateStatus(GroupTrigger newStatus)
     {
+        if (newStatus == GroupTrigger.Disabled)
+        {
+            this.disabled = true;
+        }
+        else
+        {
+            this.disabled = false;
+        }
+        
         this.charGroup.OnNotify(this, newStatus);
     }
 
+    public override void ClickButton(bool isVirtual = false)
+    {
+        base.ClickButton(isVirtual);
+
+        if (this.buttonAudio != null)
+        {
+            this.buttonAudio.Play();
+        }
+    }
+
+    public override void UnselectBehavior()
+    {
+        this.objCollider.enabled = true;
+    }
+
+    public override void DisableBehavior()
+    {
+        this.objCollider.enabled = false;
+    }
+
+    /*
     public void SelectObject()
     {
         this.selectedSprite.SetActive(true);
@@ -68,4 +98,5 @@ public class CharacterObject : MonoBehaviour
         this.disabledSprite.SetActive(true);
         this.objCollider.enabled = false;
     }
+    */
 }

@@ -5,18 +5,21 @@ using UnityEngine.EventSystems;
 
 public class SelectableButton : MonoBehaviour, IPointerClickHandler
 {
-    public GameObject maskObject;
-    public GameObject highlightObject;
+    public GameObject unselectedMask;
+    public GameObject selectedMask;
+    public GameObject disabledMask;
 
     public ButtonState curState;
 
     [SerializeField]
-    private AudioSource buttonAudio;
+    protected AudioSource buttonAudio;
 
     [HideInInspector]
     public bool clicked = false;
     [HideInInspector]
     public bool virtualClick = false;
+    [HideInInspector]
+    public bool disabled = false;
 
     protected virtual void Start()
     {
@@ -28,7 +31,7 @@ public class SelectableButton : MonoBehaviour, IPointerClickHandler
         this.curState.UpdateState();
     }
 
-    public void OnPointerClick(PointerEventData data)
+    public virtual void OnPointerClick(PointerEventData data)
     {
         if (this.buttonAudio != null)
         {
@@ -38,7 +41,7 @@ public class SelectableButton : MonoBehaviour, IPointerClickHandler
         this.ClickButton();
     }
 
-    public void ClickButton(bool isVirtual = false)
+    public virtual void ClickButton(bool isVirtual = false)
     {
         this.clicked = true;
         this.virtualClick = isVirtual;

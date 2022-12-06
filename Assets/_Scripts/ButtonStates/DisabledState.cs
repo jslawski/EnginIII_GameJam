@@ -8,11 +8,19 @@ public class DisabledState : ButtonState
     {
         base.Enter(buttonController);
 
-        this.controller.maskObject.SetActive(false);
-
-        if (this.controller.highlightObject != null)
+        if (this.controller.unselectedMask != null)
         {
-            this.controller.highlightObject.SetActive(false);
+            this.controller.unselectedMask.SetActive(false);
+        }
+        
+        if (this.controller.selectedMask != null)
+        {
+            this.controller.selectedMask.SetActive(false);
+        }
+
+        if (this.controller.disabledMask != null)
+        {
+            this.controller.disabledMask.SetActive(true);
         }
 
         this.controller.DisableBehavior();
@@ -21,9 +29,11 @@ public class DisabledState : ButtonState
 
     public override void UpdateState()
     {
-        if (this.controller.clicked == true)
+        base.UpdateState();
+
+        if (this.controller.disabled == false)
         {            
-            this.controller.ChangeState(new SelectedState());
+            this.controller.ChangeState(new UnselectedState());
         }
     }
 }

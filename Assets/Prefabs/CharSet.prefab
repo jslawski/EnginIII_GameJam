@@ -391,11 +391,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed57a3880c28f747be63fdc223a1233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maskObject: {fileID: 6169900216099088234}
-  highlightObject: {fileID: 0}
+  unselectedMask: {fileID: 6169900216099088234}
+  selectedMask: {fileID: 0}
+  disabledMask: {fileID: 0}
   buttonAudio: {fileID: 6583934917018016955}
   clicked: 0
   virtualClick: 0
+  disabled: 0
   buttonText: {fileID: 4528815506309270664}
 --- !u!114 &4880125124569218738
 MonoBehaviour:
